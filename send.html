@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<style>
+    form {
+        width: max-content;
+    }
+</style>
+<form enctype="multipart/form-data" action="./xmltohtml.php" method="post" target="_blank">
+    <fieldset>
+        <legend>Проверка обновления по статичной ссылке</legend>
+        <input type="hidden" name="action" value="check-static-link">
+        <button>check</button>
+    </fieldset>
+</form>
+<form enctype="multipart/form-data" action="./xmltohtml.php" method="post" target="_blank">
+    <fieldset>
+        <legend>Заменить по ссылке указаной в файле</legend>
+        <input type="hidden" name="action" value="check-for-file">
+        <input type="file" name="file" id="">
+        <button>check</button>
+    </fieldset>
+</form>
+<form enctype="multipart/form-data" action="./xmltohtml.php" method="post" target="_blank">
+    <fieldset>
+        <legend>Распечатать файл</legend>
+        <input type="hidden" name="action" value="proc">
+        <input type="file" name="file" id="">
+        <button>submit</button>
+    </fieldset>
+</form>

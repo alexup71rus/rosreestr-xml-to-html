@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+            let selectedFile = (ev) => {
+                if (ev.files[0] && ev.files[0].type === "text/xml") {
+                    const reader = new FileReader();
+                    reader.onload = event => transformxml(event.target.result);
+                    reader.onerror = error => reject(error);
+                    reader.readAsText(ev.files[0]);
+                }
+            }
+            
+            let loadXSL = (url) => {
+                xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, false);
+                xhttp.send();
+                if(xhttp.responseXML == undefined) throw "XHR failed for " + url;
+                return xhttp.responseXML;
+            }
+    
+            let transformxml = (file) => {
+                const xml = ( new window.DOMParser() ).parseFromString(file, "text/xml");
+                const xsl = loadXSL("./xsl/OKS/Common.xsl"); // ТУТ ФАЙЛ СТИЛЕЙ
+                let xsltPrs = new XSLTProcessor();
+                xsltPrs.importStylesheet(xsl);
+    
+                const result = xsltPrs.transformToFragment(xml, document);
+    
+                const xmlsrv = new XMLSerializer();
+                const plaintext = xmlsrv.serializeToString(result);
+                document.documentElement.innerHTML = plaintext;
+            };
+        </script>
+</head>
+<body>
+    <fieldset>
+        <legend>Распечатать файл</legend>
+        <input type="file" name="file" id="file" onchange="selectedFile(this)">
+    </fieldset>
+</body>
+</html>
